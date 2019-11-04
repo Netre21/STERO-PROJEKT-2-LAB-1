@@ -1,0 +1,18 @@
+<launch>
+
+<include file="$(find stero_mobile_init)/launch/my_world.launch" />
+<!--
+-->
+	<node name="static_tf0" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /map /odom 10"/>
+
+<node name="map_server" pkg="map_server" type="map_server" args="$(find stero_mobile_init)/maps/map1.yaml" />
+
+<rosparam file="$(find stero_mobile_init)/config/parameters_global.yaml" command="load" ns="costmap/global_costmap" />
+
+<rosparam file="$(find stero_mobile_init)/config/parameters_local.yaml" command="load" ns="costmap/local_costmap" />
+
+
+<node name="costmap" pkg="stero_mobile_init" type="integration_node_server" output="screen">
+	</node>
+    <node name="rviz" pkg="rviz" type="rviz"/>
+</launch>
